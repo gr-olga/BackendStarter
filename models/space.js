@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class space extends Model {
     static associate(models) {
       space.belongsTo(models.user)
+      space.hasMany(models.story)
     }
   }
 

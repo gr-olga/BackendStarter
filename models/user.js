@@ -33,14 +33,5 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 
-//npx sequelize-cli model:generate --name space --attributes title:string,description:text,backgroundColor:string,color:string
+//npx sequelize-cli model:generate --name story --attributes name:string,content:text,imageUrl:string
 
-
-//id              | Integer   | yes      | Already added by model:generate                                     |
-// | title           | String    | yes      |                                                                     |
-// | description     | Text      | no       |                                                                     |
-// | backgroundColor | String    | no       | This will always be a hexcode and default should be #ffffff (white) |
-// | color           | String    | no       | This will always be a hexcode and default should be #000000 (black) |
-// | createdAt       | Date      | yes      | Already added by model:generate                                     |
-// | updatedAt       | Date      | yes      | Already added by model:generate                                     |
-// | userId          | Integer   | yes      | Foreign key (references a user)                                     |
