@@ -17,8 +17,8 @@ module.exports = {
                 {
                     title: "test 2 title",
                     description: "it is a space description for 2 test",
-                    backgroundColor: "#ffffff",
-                    color: "#000000",
+                    backgroundColor: "#ba5757",
+                    color: "##c6adad",
                     userId: 2,
                     createdAt: new Date(),
                     updatedAt: new Date(),
