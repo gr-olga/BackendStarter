@@ -30,3 +30,6 @@ module.exports = {
     await queryInterface.bulkDelete("users", null, {});
   },
 };
+
+//npx sequelize-cli seed:generate --name some-spaces
+//npx sequelize-cli seed:generate --name some-stories
