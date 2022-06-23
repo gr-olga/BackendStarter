@@ -26,21 +26,21 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res, next) => {
-    try {
-        const {title, description, backgroundColor, color, userId} = req.body;
-        console.log({title, description, backgroundColor, color, userId});
-        const newSpace = await Space.create({
-            title: title,
-            description: description,
-            backgroundColor: backgroundColor,
-            color: color,
-            userId: userId
-        },);
-        res.send(newSpace);
-    } catch (e) {
-        next(e);
-    }
-});
+// router.post("/", async (req, res, next) => {
+//     try {
+//         const {title, description, backgroundColor, color, userId} = req.body;
+//         console.log({title, description, backgroundColor, color, userId});
+//         const newSpace = await Space.create({
+//             title: title,
+//             description: description,
+//             backgroundColor: backgroundColor,
+//             color: color,
+//             userId: userId
+//         },);
+//         res.send(newSpace);
+//     } catch (e) {
+//         next(e);
+//     }
+// });
 
 module.exports = router;
