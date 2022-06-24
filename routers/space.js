@@ -1,4 +1,5 @@
 const {Router} = require("express")
+const authMiddleware = require("../auth/middleware");
 const Space = require("../models").space;
 const Story = require("../models").story;
 
@@ -25,22 +26,40 @@ router.get("/:id", async (req, res) => {
         console.log(e.message);
     }
 });
+router.delete("/:id",
+    async (req, res) => {
+        try {
+            const {id} = req.params;
+            const userToDelete = await Story.findByPk(id);
+            await userToDelete.destroy();
+            res.send("Player terminated");
+        } catch (e) {
+            console.log(e.message);
+        }
+    });
 
-// router.post("/", async (req, res, next) => {
-//     try {
-//         const {title, description, backgroundColor, color, userId} = req.body;
-//         console.log({title, description, backgroundColor, color, userId});
-//         const newSpace = await Space.create({
-//             title: title,
-//             description: description,
-//             backgroundColor: backgroundColor,
-//             color: color,
-//             userId: userId
-//         },);
-//         res.send(newSpace);
-//     } catch (e) {
-//         next(e);
-//     }
-// });
+router.post("/story", authMiddleware, async (req, res) => {
+    try {
+        const {name, content, imageUrl, spaceId} = req.body;
+        console.log(name, content, imageUrl, spaceId);
+        const space = await Space.findByPk(spaceId)
+        console.log(space)
+        if (!name || !content || !imageUrl || !space) {
+            res.status(400).send("missing parameters");
+        } else {
+            const newStory = await Story.create({
+                name: name,
+                content: content,
+                imageUrl: imageUrl,
+                spaceId: spaceId
+
+            });
+            res.send(newStory);
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
+});
+
 
 module.exports = router;

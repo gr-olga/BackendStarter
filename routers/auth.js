@@ -12,7 +12,6 @@ const router = new Router();
 router.post("/login", async (req, res, next) => {
     try {
         const {email, password} = req.body;
-
         if (!email || !password) {
             return res
                 .status(400)
@@ -24,11 +23,14 @@ router.post("/login", async (req, res, next) => {
                 message: "User with that email not found or password incorrect",
             });
         }
+        const fullUser = await User.findByPk(user.id, {
+            include: [{model: Space, include: [Story]}]
+        });
 
         delete user.dataValues["password"]; // don't send back the password hash
         const token = toJWT({userId: user.id});
 
-        return res.status(200).send({token, user: user.dataValues});
+        return res.status(200).send({token, user: fullUser});
     } catch (error) {
         console.log(error);
         return res.status(400).send({message: "Something went wrong, sorry"});
@@ -80,5 +82,7 @@ router.get("/me", authMiddleware, async (req, res) => {
     res.status(200).send({user: fullUser});
 
 });
+
+
 
 module.exports = router;
