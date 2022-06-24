@@ -14,6 +14,24 @@ router.get("/", async (req, res) => {
     }
 });
 
+
+router.put("/", authMiddleware,async (req, res) => {
+    try {
+        const {title, description, backgroundColor, color, spaceId} = req.body;
+        const spaces = await Space.findByPk(spaceId);
+        const updated = await spaces.update({
+            title: title,
+            description: description,
+            backgroundColor: backgroundColor,
+            color: color
+        });
+        res.send(updated);
+    } catch (e) {
+        console.log(e.message);
+    }
+});
+
+
 router.get("/:id", async (req, res) => {
     try {
         const spacesId = req.params.id;
@@ -32,7 +50,7 @@ router.delete("/:id",
             const {id} = req.params;
             const userToDelete = await Story.findByPk(id);
             await userToDelete.destroy();
-            res.send("Player terminated");
+            res.send("Story terminated");
         } catch (e) {
             console.log(e.message);
         }
