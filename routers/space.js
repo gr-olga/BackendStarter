@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.put("/", authMiddleware,async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
     try {
         const {title, description, backgroundColor, color, spaceId} = req.body;
         const spaces = await Space.findByPk(spaceId);

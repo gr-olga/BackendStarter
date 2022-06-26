@@ -55,10 +55,13 @@ router.post("/signup", async (req, res) => {
             color: "#000000",
             userId: newUser.id
         },);
+        const fullUser = await User.findByPk(newUser.id, {
+            include: [{model: Space, include: [Story]}]
+        })
 
         delete newUser.dataValues["password"]; // don't send back the password hash
         const token = toJWT({userId: newUser.id});
-        res.status(201).json({token, user: newUser.dataValues});
+        res.status(201).json({token, user: fullUser});
     } catch (error) {
         if (error.name === "SequelizeUniqueConstraintError") {
             return res
@@ -82,7 +85,6 @@ router.get("/me", authMiddleware, async (req, res) => {
     res.status(200).send({user: fullUser});
 
 });
-
 
 
 module.exports = router;
